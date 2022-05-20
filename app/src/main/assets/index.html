@@ -1,0 +1,34 @@
+<html>
+<head>
+    <script>
+        const serverURL = '192.168.1.8:8080'
+
+        function _request_post(path, body) {
+            const options = {
+                method: "post", 
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+
+            fetch(`${serverURL}/${path}`, options)
+        }
+
+        function playRadio() {
+            const radioURL = document.getElementById('radio_url').value
+            _request_post('play', { radioURL })
+        }
+
+        function stopRadio() {
+            _request_post('stop')
+        }
+    </script>
+</head>
+<body>
+    <input id="radio_url" placeholder="radio URL"/>
+    <button onclick="playRadio()">Play</button>
+    <button onclick="stopRadio()">Stop</button>
+</body>
+</html>
