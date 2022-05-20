@@ -7,7 +7,7 @@ import java.io.IOException
 import com.dejssa.radioserver.Service.*
 
 class MainActivity : AppCompatActivity() {
-    private var httpServer: WebServer = WebServer()
+    private var httpServer: Server = Server()
     private var serverUp = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,12 +23,6 @@ class MainActivity : AppCompatActivity() {
                 false
             }
         }
-    }
-
-    // DON'T FORGET to stop the server
-    override fun onDestroy() {
-        super.onDestroy()
-        httpServer.stop()
     }
 
     private fun startServer() {

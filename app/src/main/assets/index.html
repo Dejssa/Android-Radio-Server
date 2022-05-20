@@ -1,34 +1,80 @@
 <html>
 <head>
-    <script>
-        const serverURL = '192.168.1.8:8080'
+	<script>
+		const serverURL = '192.168.1.102:8080'
 
-        function _request_post(path, body) {
-            const options = {
-                method: "post", 
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            }
+		function _request_post(path, body) {
+			const options = {
+				method: "post", 
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			}
 
-            fetch(`${serverURL}/${path}`, options)
-        }
+			fetch(`${serverURL}/${path}`, options)
+		}
 
-        function playRadio() {
-            const radioURL = document.getElementById('radio_url').value
-            _request_post('play', { radioURL })
-        }
+		function playRadio() {
+			const radioURL = document.getElementById('radio_url').value
+			_request_post('play', { radioURL })
+		}
 
-        function stopRadio() {
-            _request_post('stop')
-        }
-    </script>
+		function stopRadio() {
+			_request_post('stop')
+		}
+	</script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.controls_container {
+			display: grid;
+			grid-template-columns: auto min-content;
+			padding: 16px;
+			column-gap: 16px;
+		}
+
+		.radio_input_container {
+			display: flex;
+			align-items: center;
+		}
+		.radio_input_container input {
+			width: 100%;
+		}
+
+		.radio_buttons_container {
+			display: flex;
+			flex-direction: row;
+			column-gap: 8px;
+		}
+
+		.player_button {
+			height: 48px;
+			width: 48px;
+			border-radius: 24px;
+			border: 1px solid grey;
+			background: white;
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
-    <input id="radio_url" placeholder="radio URL"/>
-    <button onclick="playRadio()">Play</button>
-    <button onclick="stopRadio()">Stop</button>
+	<div class="controls_container">
+		<div class="radio_input_container">
+			<input id="radio_url" placeholder="radio URL" value="https://zt02.cdn.eurozet.pl/ZETALT.mp3"/>
+		</div>
+		<div class="radio_buttons_container">
+			<button class="player_button" onclick="playRadio()">
+				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowIcon"><path d="M8 5v14l11-7z"></path></svg>
+			</button>
+			<button class="player_button" onclick="stopRadio()">
+				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StopIcon"><path d="M6 6h12v12H6z"></path></svg>
+			</button>
+		</div>
+	</div>
 </body>
 </html>
