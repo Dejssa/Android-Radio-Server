@@ -48,11 +48,11 @@
 			const stationsContainer = document.getElementById("stations_list");
 
 			if(stations.length === 0) {
-				stationsContainer.innerHTML = '<span style="text-align: center;">No stored stations</span>'
+				stationsContainer.innerHTML = '<span class="body1" style="text-align: center; margin: 0">No stored stations</span>'
+			} else {
+				stationsContainer.innerHTML = ''
+				stations.forEach(station => stationsContainer.append(renderStationRow(station)))
 			}
-
-			
-			stations.forEach(station => stationsContainer.append(renderStationRow(station)))
 		}
 
 		// ============================================
@@ -159,13 +159,16 @@
 		}
 
 		.container {
+			transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+			border-radius: 4px;
+			box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+			background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+			overflow: hidden;
 			background-color: white;
-			border-radius: 8px;
 			padding: 16px;
 			margin: 16px 0;
 			display: flex;
 			flex-direction: column;
-			box-shadow: 0px 1px 4px black;
 		}
 
 		.station_row {
@@ -279,16 +282,79 @@
 			min-width: 150px;
 		}
 
+		#current_station_title {
+			background: #2c387e;
+			color: white;
+			text-overflow: ellipsis;
+			max-width: 100%;
+			font-family: Roboto, Helvetica, Arial, sans-serif;
+			font-size: 0.8125rem;
+			display: inline-flex;
+			-webkit-box-align: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			justify-content: center;
+			height: 24px;
+			border-radius: 16px;
+			white-space: nowrap;
+			transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+			cursor: default;
+			outline: 0px;
+			text-decoration: none;
+			border: 0px;
+			padding: 0px;
+			vertical-align: middle;
+			box-sizing: border-box;
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+
+		.h6 {
+			margin: 0px 0px 0.35em;
+			font-family: Roboto, Helvetica, Arial, sans-serif;
+			font-weight: 500;
+			font-size: 1.25rem;
+			line-height: 1.6;
+			letter-spacing: 0.0075em;
+		}
+
+		.subtitle1 {
+			margin: 0px 0px 0.35em;
+			font-family: Roboto, Helvetica, Arial, sans-serif;
+			font-weight: 400;
+			font-size: 1rem;
+			line-height: 1.75;
+			letter-spacing: 0.00938em;
+		}
+
+		.subtitle2 {
+			margin: 0px 0px 0.35em;
+			font-family: Roboto, Helvetica, Arial, sans-serif;
+			font-weight: 500;
+			font-size: 0.875rem;
+			line-height: 1.57;
+			letter-spacing: 0.00714em;
+		}
+
+		.body1  {
+			margin: 0px 0px 0.35em;
+			font-family: Roboto, Helvetica, Arial, sans-serif;
+			font-weight: 400;
+			font-size: 1rem;
+			line-height: 1.5;
+			letter-spacing: 0.00938em
+		}
+
 	</style>
 </head>
 <body onload="appOnLoad()">
 <div class="container">
 	<div class="controls_container">
 		<div>
-				<span>
+				<span  class="subtitle1">
 					Current station:
 				</span>
-			<span id="current_station_title">
+			<span id="current_station_title" class="body1">
 					Loading...
 				</span>
 		</div>
