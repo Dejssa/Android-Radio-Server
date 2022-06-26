@@ -9,8 +9,8 @@
 			<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
 		</svg>`
 
-		const serverURL = window.location.href
-		// const serverURL = "http://192.168.1.35:8080"
+		// const serverURL = window.location.href
+		const serverURL = "http://192.168.1.35:8080"
 		const headers = {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
@@ -35,6 +35,12 @@
 			container.append(playButton)
 
 			return container
+		}
+
+		function renderStationsList(stations) {
+			const stationsContainer = document.getElementById("stations_list");
+			stationsContainer.innerHTML = ''
+			stations.forEach(station => stationsContainer.append(renderStationRow(station)))
 		}
 
 		// ============================================
@@ -83,11 +89,7 @@
 					document.getElementById("radio_volume").value = data.Volume
 					document.getElementById("current_station_title").innerText = data.StationInfo.Title
 					// document.getElementById("radio_volume_switch_button").innerHTML = data.mute ? unmuteIcon : muteIcon
-					
-  				const stationsContainer = document.getElementById("stations_list");
-					data.Stations.forEach(station => {
-						stationsContainer.append(renderStationRow(station))
-					})
+					renderStationsList(data.Stations)
 				})
 		}
 
@@ -95,6 +97,8 @@
 			const URL = document.getElementById('radio_url').value
 			const Title = document.getElementById('radio_title').value
 			_request_post('station/save', { URL, Title })
+				.then(response => response.json())
+				.then(data => renderStationsList(data))
 		}
 
 		function updateMuteState() {
@@ -141,7 +145,6 @@
 			border-radius: 8px;
 			padding: 16px;
 			margin: 16px 0;
-			row-gap: 8px;
 			display: flex;
 			flex-direction: column;
 			box-shadow: 0px 1px 4px black;
@@ -151,7 +154,23 @@
 			justify-content: space-between;
 			width: 100%;
 			display: flex;
+			padding-top: 12px;
+			padding-bottom: 12px;
 			align-items: center;
+		}
+
+		.station_row:first-child:not(:only-child) {
+			padding-top: 0px !important;
+			padding-bottom: 12px !important;
+		}
+
+		.station_row:last-child:not(:only-child) {
+			padding-top: 12px !important;
+			padding-bottom: 0px !important;
+		}
+
+		.station_row:not(:last-child) {
+			border-bottom: 1px solid #b7b7b7;
 		}
 
 		.controls_container {
