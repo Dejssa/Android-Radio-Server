@@ -1,10 +1,12 @@
 package com.dejssa.radioserver
 
+import android.media.AudioManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.dejssa.radioserver.Service.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
-import com.dejssa.radioserver.Service.*
+
 
 class MainActivity : AppCompatActivity() {
     private var httpServer: Server = Server()
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startServer() {
         httpServer.pageFile = loadWebPage()
+        httpServer.audioManager = this.getSystemService(AUDIO_SERVICE) as AudioManager
         httpServer.start()
         serverTextView.text = getString(R.string.server_up)
         serverButton.text = getString(R.string.stop_server)

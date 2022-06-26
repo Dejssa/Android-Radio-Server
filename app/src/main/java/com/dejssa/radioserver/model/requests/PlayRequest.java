@@ -1,4 +1,4 @@
-package com.dejssa.radioserver.model;
+package com.dejssa.radioserver.model.requests;
 
 public class PlayRequest {
     public String radioURL;

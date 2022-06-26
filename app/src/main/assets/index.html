@@ -1,48 +1,170 @@
 <html>
 <head>
 	<script>
-		const serverURL = '192.168.1.102:8080'
+		const muteIcon = `<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+			<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/>
+		</svg>`
+
+		const unmuteIcon = `<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+			<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+		</svg>`
+
+		const serverURL = window.location.href
+		// const serverURL = "http://192.168.1.35:8080"
+		const headers = {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		}
+		// ============================================
+		// 							BASE API REQUESTS
+		// ============================================
+
+		function renderStationRow(stationInfo) {
+			const container = document.createElement('div');
+			container.className = "station_row"
+
+			const title = document.createElement("span")
+			title.innerText = stationInfo.Title
+
+			const playButton = document.createElement('button')
+			playButton.onclick = () => playStation(stationInfo.UUID)
+			playButton.className = "player_button"
+			playButton.innerHTML = '<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>'
+
+			container.append(title)
+			container.append(playButton)
+
+			return container
+		}
+
+		// ============================================
+		// 							BASE API REQUESTS
+		// ============================================
 
 		function _request_post(path, body) {
 			const options = {
-				method: "post", 
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
+				method: "post",
+				headers,
 				body: JSON.stringify(body)
 			}
 
-			fetch(`${serverURL}/${path}`, options)
+			return fetch(`${serverURL}/${path}`, options)
 		}
 
+		function _request_get(path) {
+			const options = {
+				method: "post",
+				headers,
+			}
+
+			return fetch(`${serverURL}/${path}`, options)
+		}
+
+		// ============================================
+		// 									REQUESTS
+		// ============================================
+
 		function playRadio() {
-			const radioURL = document.getElementById('radio_url').value
-			_request_post('play', { radioURL })
+			_request_post('current/play')
 		}
 
 		function stopRadio() {
-			_request_post('stop')
+			_request_post('current/stop')
 		}
+
+		function playStation(uuid) {
+			_request_post('station/play', { UUID: uuid })
+		}
+
+		function loadStationInfo() {
+			_request_get('station/current')
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById("radio_volume").value = data.Volume
+					document.getElementById("current_station_title").innerText = data.StationInfo.Title
+					// document.getElementById("radio_volume_switch_button").innerHTML = data.mute ? unmuteIcon : muteIcon
+					
+  				const stationsContainer = document.getElementById("stations_list");
+					data.Stations.forEach(station => {
+						stationsContainer.append(renderStationRow(station))
+					})
+				})
+		}
+
+		function saveStationInfo() {
+			const URL = document.getElementById('radio_url').value
+			const Title = document.getElementById('radio_title').value
+			_request_post('station/save', { URL, Title })
+		}
+
+		function updateMuteState() {
+			_request_post('volume/mute').then(() => document.getElementById("radio_volume_switch_button").innerHTML = data.mute ? unmuteIcon : muteIcon)
+		}
+
+		function updateVolume(event) {
+			_request_post('volume/level', { Percentage: event.target.value })
+		}
+
+		// ============================================
+		// 							PAGE FUNCTIONS
+		// ============================================
+		
+
+		function appOnLoad() {
+			document.getElementById("radio_volume_switch_button").innerHTML = unmuteIcon
+
+			this.loadStationInfo()
+		}
+
+
 	</script>
 	<style>
+		/* 
+			primary:
+			- dark 	#2c387e
+			- main 	#3f51b5
+			- light #6573c3
+		*/
+		html {
+			background: #ececec;
+		}
+
 		body {
-			margin: 0;
+			margin: 0 auto;
 			padding: 0;
+			width: 700px;
+			font-family: sans-serif;
 		}
 
-		.controls_container {
-			display: grid;
-			grid-template-columns: auto min-content;
+		.container {
+			background-color: white;
+			border-radius: 8px;
 			padding: 16px;
-			column-gap: 16px;
+			margin: 16px 0;
+			row-gap: 8px;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 0px 1px 4px black;
 		}
 
-		.radio_input_container {
+		.station_row {
+			justify-content: space-between;
+			width: 100%;
 			display: flex;
 			align-items: center;
 		}
-		.radio_input_container input {
+
+		.controls_container {
+			display: flex;
+			align-items: center;
+			column-gap: 16px;
+			justify-content: space-between;
+		}
+
+		.add_radion_container {
+			display: flex;
+			align-items: center;
+			column-gap: 8px;
 			width: 100%;
 		}
 
@@ -52,29 +174,95 @@
 			column-gap: 8px;
 		}
 
-		.player_button {
-			height: 48px;
-			width: 48px;
-			border-radius: 24px;
+		button {
+			height: 32px;
 			border: 1px solid grey;
 			background: white;
 			cursor: pointer;
+			padding: 4px 12px 4px 12px;
+			border-radius: 4px;
 		}
+
+		input[type=text] {
+			border-radius: 4px;
+			height: 32px;
+			border: 1px solid grey;
+			padding: 4px 12px 4px 12px;
+			width: 100%;
+		}
+
+		input[type=text]:focus-visible {
+			outline: unset;
+			border: 1px solid #3f51b5;
+		}
+
+		.player_button {
+			min-width: 32px;
+			padding: 4px;
+			border-radius: 24px;
+			background-color: #3f51b5;
+			fill: white;
+			box-shadow: 0px 1px 4px #000000a8;
+			border-width: 0px;
+		}
+
+		.player_button:hover{
+			background-color: #6573c3;
+		}
+
+		#station_info {
+			display: flex;
+			align-items: baseline;
+			column-gap: 4px;
+		}
+
+		#radio_volume {
+			padding: 0;
+			min-width: 150px;
+		}
+
 	</style>
 </head>
-<body>
+<body onload="appOnLoad()">
+<div class="container">
 	<div class="controls_container">
-		<div class="radio_input_container">
-			<input id="radio_url" placeholder="radio URL" value="https://zt02.cdn.eurozet.pl/ZETALT.mp3"/>
+		<div>
+				<span>
+					Current station:
+				</span>
+			<span id="current_station_title">
+					Loading...
+				</span>
 		</div>
 		<div class="radio_buttons_container">
+			<button id="radio_volume_switch_button" class="player_button" onclick="updateMuteState()"></button>
+  		<input id="radio_volume" type="range" min="0" max="100" value="5" onchange="updateVolume(event)">
 			<button class="player_button" onclick="playRadio()">
-				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowIcon"><path d="M8 5v14l11-7z"></path></svg>
+				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
 			</button>
 			<button class="player_button" onclick="stopRadio()">
-				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StopIcon"><path d="M6 6h12v12H6z"></path></svg>
+				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"></path></svg>
+			</button>
+			<button class="player_button" onclick="loadStationInfo()">
+				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+					<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+				</svg>
 			</button>
 		</div>
 	</div>
+</div>
+<div class="container">
+	<div class="controls_container">
+		<div class="add_radion_container">
+			<!-- https://zt02.cdn.eurozet.pl/ZETALT.mp3 -->
+			<input type="text" id="radio_url" placeholder="Radio URL"/>
+			<input type="text" id="radio_title" placeholder="Radio name"/>
+			<button onclick="saveStationInfo()">Save</button>
+		</div>
+	</div>
+</div>
+<div id="stations_list" class="container">
+
+</div>
 </body>
 </html>
