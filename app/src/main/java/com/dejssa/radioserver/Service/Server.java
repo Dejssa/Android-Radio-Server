@@ -122,9 +122,16 @@ public class Server extends NanoHTTPD{
         this.audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_SHOW_UI);
     }
 
+    private int getVolume() {
+        int volume = this.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = this.audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+        return (volume * 100) / maxVolume;
+    }
+
     private StatusResponse prepareRadioStatus() {
         return new StatusResponse(
-            this.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC),
+            this.getVolume(),
             this.currentStation.toResponse(),
             this.Stations
         );
