@@ -9,8 +9,8 @@
 			<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
 		</svg>`
 
-		// const serverURL = window.location.href
-		const serverURL = "http://192.168.1.35:8080"
+		const serverURL = window.location.href
+		// const serverURL = "http://192.168.1.35:8080"
 		const headers = {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
@@ -104,8 +104,8 @@
 			_request_get('station/current')
 				.then(response => response.json())
 				.then(data => {
-					document.getElementById("radio_volume").value = data.Volume
-					document.getElementById("current_station_title").innerText = data.StationInfo.Title
+					document.getElementById("radio_volume").value = data.Volume || 0
+					document.getElementById("current_station_title").innerText = data.StationInfo.Title || 'No station selected'
 					// document.getElementById("radio_volume_switch_button").innerHTML = data.mute ? unmuteIcon : muteIcon
 					renderStationsList(data.Stations)
 				})
@@ -360,7 +360,7 @@
 		</div>
 		<div class="radio_buttons_container">
 			<button id="radio_volume_switch_button" class="player_button" onclick="updateMuteState()"></button>
-  		<input id="radio_volume" type="range" min="0" max="100" value="5" onchange="updateVolume(event)">
+  		<input id="radio_volume" type="range" min="0" max="100" value="0" onchange="updateVolume(event)">
 			<button class="player_button" onclick="playRadio()">
 				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
 			</button>
