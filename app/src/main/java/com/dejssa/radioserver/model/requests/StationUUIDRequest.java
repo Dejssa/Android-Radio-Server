@@ -1,9 +1,9 @@
 package com.dejssa.radioserver.model.requests;
 
-public class StationPlayRequest {
+public class StationUUIDRequest {
     public String UUID;
 
-    public StationPlayRequest(String UUID) {
+    public StationUUIDRequest(String UUID) {
         this.UUID = UUID;
     }
 }

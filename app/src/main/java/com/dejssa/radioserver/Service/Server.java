@@ -4,20 +4,16 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 
 import com.dejssa.radioserver.model.domain.StationInfo;
-import com.dejssa.radioserver.model.requests.PlayRequest;
-import com.dejssa.radioserver.model.requests.StationPlayRequest;
+import com.dejssa.radioserver.model.requests.StationUUIDRequest;
 import com.dejssa.radioserver.model.requests.StationRequest;
 import com.dejssa.radioserver.model.requests.VolumeLevelRequest;
-import com.dejssa.radioserver.model.responses.StationInfoResponse;
 import com.dejssa.radioserver.model.responses.StatusResponse;
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.stream.IntStream;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -68,21 +64,24 @@ public class Server extends NanoHTTPD{
             return newFixedLengthResponse(new Gson().toJson(this.Stations));
         }
 
+        if (session.getUri().contains("station/delete")) {
+            StationUUIDRequest request = this.parseRequest(session, StationUUIDRequest.class);
+
+            deleteSelectedStation(request);
+
+            return newFixedLengthResponse(new Gson().toJson(this.Stations));
+        }
+
         if (session.getUri().contains("station/play")) {
-            StationPlayRequest request = this.parseRequest(session, StationPlayRequest.class);
+            StationUUIDRequest request = this.parseRequest(session, StationUUIDRequest.class);
 
             playSelectedStation(request);
+
+            return newFixedLengthResponse("");
         }
 
         return newFixedLengthResponse(this.pageFile);
     }
-
-//    @Override
-//    public void start() throws IOException {
-//        super.start();
-//
-//        this.playAudio("https://nashe1.hostingradio.ru:80/ultra-128.mp3?wcid=fe5dada9-6a8b-4348-8087-aaaf0d7ac1fb&stationId=ultra-main");
-//    }
 
     @Override
     public void stop() {
@@ -131,7 +130,7 @@ public class Server extends NanoHTTPD{
         );
     }
 
-    private void playSelectedStation(StationPlayRequest request) {
+    private void playSelectedStation(StationUUIDRequest request) {
         for (StationInfo station : this.Stations) {
             if (station.UUID.equals(request.UUID)) {
                 this.currentStation = station;
@@ -139,6 +138,15 @@ public class Server extends NanoHTTPD{
                 playAudio();
             }
         }
+    }
+
+    private void deleteSelectedStation(StationUUIDRequest request) {
+        int index = IntStream.range(0, Stations.size())
+                .filter(i -> Stations.get(i).UUID.equals(request.UUID))
+                .findFirst()
+                .orElse(-1);
+
+        Stations.remove(index);
     }
 
     private <T> T parseRequest(NanoHTTPD.IHTTPSession session, Class<T> classOfT) {
