@@ -23,8 +23,10 @@
     * Current station info
     * Play/stop button
     * Volume controls
+* Move stations render functions in separate file
 
 ### Fixed
+* Last removed station keeps be in the list
 
 ### Removed
 * Separate play/stop buttons

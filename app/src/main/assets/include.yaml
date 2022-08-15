@@ -1,6 +1,9 @@
 # Files mentioned here are allowed to be loaded via rest request.
 # First file is a default response on a request.
 - index.html
+- api.js
+# styles
 - styles.css
 - mui.css
-- api.js
+# components.
+- StationsListView.js
