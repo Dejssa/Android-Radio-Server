@@ -1,6 +1,6 @@
-package com.dejssa.radioserver.model.responses;
+package com.dejssa.radioserver.storage.responses;
 
-import com.dejssa.radioserver.model.domain.StationInfo;
+import com.dejssa.radioserver.storage.domain.StationInfo;
 
 import java.util.ArrayList;
 

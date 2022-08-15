@@ -1,6 +1,6 @@
-package com.dejssa.radioserver.model.domain;
+package com.dejssa.radioserver.storage.domain;
 
-import com.dejssa.radioserver.model.responses.StationInfoResponse;
+import com.dejssa.radioserver.storage.responses.StationInfoResponse;
 
 public class StationInfo {
     public String UUID;

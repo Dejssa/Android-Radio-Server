@@ -1,0 +1,169 @@
+svg {
+	width: 75%;
+	height: 75%;
+}
+
+.h4 {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 2.125rem;
+  line-height: 1.235;
+  letter-spacing: 0.00735em;
+}
+
+.h5 {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.334;
+  letter-spacing: 0em;
+}
+
+.h6 {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+}
+
+.subtitle1 {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.75;
+  letter-spacing: 0.00938em;
+}
+
+.subtitle2 {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.57;
+  letter-spacing: 0.00714em;
+}
+
+.body1  {
+  margin: 0px 0px 0.35em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em
+}
+
+.chip {
+  background: #ffa000;
+  color: white;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.8125rem;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 24px;
+  border-radius: 16px;
+  white-space: nowrap;
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  cursor: default;
+  outline: 0px;
+  text-decoration: none;
+  border: 0px;
+  padding: 0px;
+  vertical-align: middle;
+  box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+button {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0px;
+  border: 0px;
+  margin: 0px;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  min-width: 64px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  color: rgb(255, 255, 255);
+  background-color: #3f51b5;
+  box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+}
+
+button:hover {
+  text-decoration: none;
+  background-color: #2c387e;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px, rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+}
+
+button:active {
+  box-shadow: rgb(0 0 0 / 20%) 0px 5px 5px -3px, rgb(0 0 0 / 14%) 0px 8px 10px 1px, rgb(0 0 0 / 12%) 0px 3px 14px 2px;
+}
+
+button.icon {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  outline: 0px;
+  border: 0px;
+  margin: 0px;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  text-align: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  overflow: visible;
+  color: rgb(255, 255, 255);
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-size: 1.75rem;
+  box-shadow: unset;
+}
+
+button.icon :hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.icon-large {
+  width: 1em;
+  height: 1em;
+  font-size: 2.1875rem;
+}
+
+.ripple {
+
+}

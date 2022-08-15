@@ -1,4 +1,4 @@
-package com.dejssa.radioserver.model.responses;
+package com.dejssa.radioserver.storage.responses;
 
 public class StationInfoResponse {
     public String UUID;

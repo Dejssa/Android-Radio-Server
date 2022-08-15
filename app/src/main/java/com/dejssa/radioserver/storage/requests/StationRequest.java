@@ -1,6 +1,6 @@
-package com.dejssa.radioserver.model.requests;
+package com.dejssa.radioserver.storage.requests;
 
-import com.dejssa.radioserver.model.domain.StationInfo;
+import com.dejssa.radioserver.storage.domain.StationInfo;
 
 import java.util.UUID;
 

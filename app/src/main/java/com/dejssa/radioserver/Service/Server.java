@@ -3,13 +3,15 @@ package com.dejssa.radioserver.Service;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
-import com.dejssa.radioserver.model.domain.StationInfo;
-import com.dejssa.radioserver.model.requests.StationUUIDRequest;
-import com.dejssa.radioserver.model.requests.StationRequest;
-import com.dejssa.radioserver.model.requests.VolumeLevelRequest;
-import com.dejssa.radioserver.model.responses.StatusResponse;
+import com.dejssa.radioserver.storage.domain.StationInfo;
+import com.dejssa.radioserver.storage.model.WebProjectFiles;
+import com.dejssa.radioserver.storage.requests.StationUUIDRequest;
+import com.dejssa.radioserver.storage.requests.StationRequest;
+import com.dejssa.radioserver.storage.requests.VolumeLevelRequest;
+import com.dejssa.radioserver.storage.responses.StatusResponse;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,9 +20,10 @@ import java.util.stream.IntStream;
 import fi.iki.elonen.NanoHTTPD;
 
 public class Server extends NanoHTTPD{
-    public String pageFile;
+    public WebProjectFiles files;
     public AudioManager audioManager;
 
+    private WebAppResponse webAppResponse;
     private StationInfo currentStation = new StationInfo();
     private ArrayList<StationInfo> Stations = new ArrayList<>();
     private MediaPlayer player;
@@ -75,12 +78,18 @@ public class Server extends NanoHTTPD{
         if (session.getUri().contains("station/play")) {
             StationUUIDRequest request = this.parseRequest(session, StationUUIDRequest.class);
 
-            playSelectedStation(request);
+            playStationByUUID(request);
 
             return newFixedLengthResponse("");
         }
 
-        return newFixedLengthResponse(this.pageFile);
+        return this.webAppResponse.serve(session);
+    }
+
+    @Override
+    public void start() throws IOException {
+        super.start();
+        this.webAppResponse = new WebAppResponse(this.files);
     }
 
     @Override
@@ -95,6 +104,8 @@ public class Server extends NanoHTTPD{
         this.stopAudio();
 
         this.player = new MediaPlayer();
+
+//        player.isPlaying()
 
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
@@ -137,7 +148,7 @@ public class Server extends NanoHTTPD{
         );
     }
 
-    private void playSelectedStation(StationUUIDRequest request) {
+    private void playStationByUUID(StationUUIDRequest request) {
         for (StationInfo station : this.Stations) {
             if (station.UUID.equals(request.UUID)) {
                 this.currentStation = station;
