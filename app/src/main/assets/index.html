@@ -24,7 +24,15 @@
 
 		const userIcon = `<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
 			<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-			</svg>`
+		</svg>`
+		
+		const emptyListIcon = `<svg viewBox="0 0 24 24">
+			<circle cx="15.5" cy="9.5" r="1.5"></circle>
+			<circle cx="8.5" cy="9.5" r="1.5"></circle>
+			<circle cx="15.5" cy="9.5" r="1.5"></circle>
+			<circle cx="8.5" cy="9.5" r="1.5"></circle>
+			<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-2.5c2.33 0 4.32-1.45 5.12-3.5h-1.67c-.69 1.19-1.97 2-3.45 2s-2.75-.81-3.45-2H6.88c.8 2.05 2.79 3.5 5.12 3.5z"></path>
+		</svg>`
 
 		let currentUser = JSON.parse(localStorage.getItem('userName'))
 
@@ -88,7 +96,23 @@
 			const stationsContainer = document.getElementById("stations_list");
 
 			if(stations.length === 0) {
-				stationsContainer.innerHTML = '<span class="body1" style="text-align: center; margin: 0">No stored stations</span>'
+				const emptyView = document.createElement('div')
+				emptyView.className="empty_view"
+
+				const emptyViewIcon = document.createElement('div')
+				emptyViewIcon.className="empty_view_icon"
+				emptyViewIcon.innerHTML = emptyListIcon
+				
+				const emptyViewLabel = document.createElement('p')
+				emptyViewLabel.className="body1 empty_view_label"
+				emptyViewLabel.append('Currenlty there is no stations.')
+				emptyViewLabel.append(document.createElement('br'))
+				emptyViewLabel.append('What are you waiting for? Add the first one!')
+				
+				emptyView.append(emptyViewIcon)
+				emptyView.append(emptyViewLabel)
+
+				stationsContainer.append(emptyView)
 			} else {
 				stationsContainer.innerHTML = ''
 				stations.forEach(station => stationsContainer.append(renderStationRow(station)))
@@ -141,69 +165,74 @@
 
 		function appOnLoad() {
 			this.loadStationInfo()
-			this.renderLogin()
+			// this.renderLogin()
 		}
 
 
 	</script>
 </head>
 <body onload="appOnLoad()">
-	<div class="device_info">
-		<div class="container">
-			<span>
-				<span class="h5">Radio server: 304</span>
-			</span>
+	<div class="container_main">
+		<div class="header">
 			<div class="container">
-				<div id="user_info" class="user-container"></div>
-				<span style="display: flex; align-items: center; column-gap: 8px;">
-					<span class="h6" style="margin: 0;">v0.0.3</span>
-						<a href="https://github.com/Dejssa/Android-Radio-Server" target="_blank">
-						<svg class="icon-large" viewBox="0 0 24 24">
-							<path d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27"></path>
-						</svg>
-					</a>
+				<span>
+					<span class="h5">Radio server: 304</span>
 				</span>
-			</div>
-		</div>
-	</div>
-	<div class="player">
-		<div class="container">
-			<div class="current_station_info">
-				<button class="player_button" onclick="loadStationInfo()">
-					<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
-						<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-					</svg>
-				</button>
-				<span id="current_station_title" class="body1">
-					Loading station info...
-				</span>
-			</div>
-			<button class="player_button current_station_play_button" onclick="playStationCurret()">
-				<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
-			</button>
-			<div class="radio_buttons_container">
-				<div id="volume_level_icon" class="p-0 container icon-large">
-					<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
-						<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-					</svg>
+				<div class="container">
+					<div id="user_info" class="user-container"></div>
+						<span style="display: flex; align-items: center; column-gap: 8px;">
+						<span class="h6" style="margin: 0;">v0.0.3</span>
+							<a href="https://github.com/Dejssa/Android-Radio-Server" target="_blank">
+							<svg class="icon-large" viewBox="0 0 24 24">
+								<path d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27"></path>
+							</svg>
+						</a>
+					</span>
 				</div>
-				<input id="radio_volume" type="range" min="0" max="100" value="0" onchange="updateVolume(event)" oninput="updateVolumeIcon(this.value)">
 			</div>
 		</div>
-	</div>
-	<div class="card">
-		<div class="controls_container">
-			<div class="add_radion_container">
-				<!-- https://zt02.cdn.eurozet.pl/ZETALT.mp3 -->
-				<input type="text" id="radio_url" placeholder="Radio URL"/>
-				<input type="text" id="radio_title" placeholder="Radio name"/>
-				<button onclick="saveStationInfo()">
-					Save
-					<span class="ripple"></span>
+	
+		<div class="content">
+			<div class="controls_container">
+				<div class="add_radion_container">
+					<!-- https://zt02.cdn.eurozet.pl/ZETALT.mp3 -->
+					<input type="text" id="radio_url" placeholder="Radio URL"/>
+					<input type="text" id="radio_title" placeholder="Radio name"/>
+					<button onclick="saveStationInfo()">
+						Save
+						<span class="ripple"></span>
+					</button>
+				</div>
+			</div>
+			<div class="stations_list" id="stations_list"></div>
+		</div>
+	
+		<div class="footer">
+			<div class="container">
+				<div class="current_station_info">
+					<button class="player_button" onclick="loadStationInfo()">
+						<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+							<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+						</svg>
+					</button>
+					<span id="current_station_title" class="body1">
+						Loading station info...
+					</span>
+				</div>
+				<button class="player_button current_station_play_button" onclick="playStationCurret()">
+					<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
 				</button>
+				<div class="radio_buttons_container">
+					<div id="volume_level_icon" class="p-0 container icon-large">
+						<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+							<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+						</svg>
+					</div>
+					<input id="radio_volume" type="range" min="0" max="100" value="0" onchange="updateVolume(event)" oninput="updateVolumeIcon(this.value)">
+				</div>
 			</div>
 		</div>
-		<div id="stations_list" />
+
 	</div>
 </body>
 </html>

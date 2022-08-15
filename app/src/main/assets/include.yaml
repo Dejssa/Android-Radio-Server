@@ -1,5 +1,5 @@
-# files mentioned here are allowed to be loaded via rest request.
-# First file is a default response on a request 
+# Files mentioned here are allowed to be loaded via rest request.
+# First file is a default response on a request.
 - index.html
 - styles.css
 - mui.css

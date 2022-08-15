@@ -16,6 +16,8 @@
     * Link to git project
     * Link to changelog
     * User login or logged user info
+  * Content
+    * Empty list view
   * Footer contains all station controls
     * Refresh radio state
     * Current station info
