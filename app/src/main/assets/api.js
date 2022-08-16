@@ -1,5 +1,5 @@
-// const serverURL = window.location.href
-const serverURL = "http://192.168.1.102:8080"
+const serverURL = window.location.href
+// const serverURL = "http://192.168.1.102:8080"
 const headers = {
   'Accept': 'application/json',
   'Content-Type': 'application/json'
@@ -33,9 +33,11 @@ function _request_get(path) {
 // ============================================
 
 
-const playStationCurret = () => _request_post('current/play')
+const playCurrentStation = () => _request_post('current/play')
+  .then(response => response.json())
 
 const stopCurrentStation = () => _request_post('current/stop')
+  .then(response => response.json())
 
 const loadCurrentStation = () => 			_request_get('station/current')
   .then(response => response.json())

@@ -16,8 +16,6 @@ public class WebAppResponse {
     }
 
     public NanoHTTPD.Response serve(NanoHTTPD.IHTTPSession session) {
-        Log.d("Styles", "serve: here we are");
-
         for (int i = 0; i < files.getFiles().size(); i++) {
             if (session.getUri().contains(files.getFiles().get(i).getName())) {
                 Log.d("Styles", "serve: css");

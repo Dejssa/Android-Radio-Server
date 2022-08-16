@@ -2,6 +2,7 @@ package com.dejssa.radioserver.Service;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import com.dejssa.radioserver.storage.domain.StationInfo;
 import com.dejssa.radioserver.storage.model.WebProjectFiles;
@@ -38,13 +39,13 @@ public class Server extends NanoHTTPD{
         if (session.getUri().contains("current/play")) {
             this.playAudio();
 
-            return newFixedLengthResponse("");
+            return newFixedLengthResponse(new Gson().toJson(this.prepareRadioStatus()));
         }
 
         if (session.getUri().contains("current/stop")) {
             this.stopAudio();
 
-            return newFixedLengthResponse("");
+            return newFixedLengthResponse(new Gson().toJson(this.prepareRadioStatus()));
         }
 
         if (session.getUri().contains("volume/level")) {
@@ -80,7 +81,7 @@ public class Server extends NanoHTTPD{
 
             playStationByUUID(request);
 
-            return newFixedLengthResponse("");
+            return newFixedLengthResponse(new Gson().toJson(this.prepareRadioStatus()));
         }
 
         return this.webAppResponse.serve(session);
@@ -104,8 +105,6 @@ public class Server extends NanoHTTPD{
         this.stopAudio();
 
         this.player = new MediaPlayer();
-
-//        player.isPlaying()
 
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
@@ -144,8 +143,17 @@ public class Server extends NanoHTTPD{
         return new StatusResponse(
             this.getVolume(),
             this.currentStation.toResponse(),
-            this.Stations
+            this.Stations,
+            this.getPlayingStatus()
         );
+    }
+
+    private boolean getPlayingStatus() {
+        if (this.player == null) {
+            return false;
+        }
+
+        return this.player.isPlaying();
     }
 
     private void playStationByUUID(StationUUIDRequest request) {

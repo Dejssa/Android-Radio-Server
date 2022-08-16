@@ -9,6 +9,38 @@ const emptyListIcon = `<svg viewBox="0 0 24 24">
 const deleteStationIcon = `<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>`
 const playStationIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>`
 
+const validateNewRadio = (url, title) => {
+  if (url.length === 0) {
+    return 'Empty URL'
+  }
+
+  if (title.length === 0) {
+    return 'Empty title'
+  }
+
+  return null
+}
+
+const saveStationInfo = () => {
+  const URL = document.getElementById('radio_url').value
+  const Title = document.getElementById('radio_title').value
+
+  const validation = validateNewRadio(URL, Title)
+  if (validation) {
+    alert(validation)
+
+    return
+  }
+ 
+  saveNewStation(URL, Title)
+    .then(data => renderStationsList(data))
+}
+
+function deleteSelectedStation(uuid) {
+  deleteStationByUUID(uuid)
+    .then(data => renderStationsList(data))
+}
+
 function renderStationRow(stationInfo) {
   const container = document.createElement('div');
   container.className = "station_row"
