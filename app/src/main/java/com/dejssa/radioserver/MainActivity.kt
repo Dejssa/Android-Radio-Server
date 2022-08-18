@@ -32,8 +32,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startServer() {
+        httpServer.context = this.applicationContext
         httpServer.files = loadWebPageFiles()
         httpServer.audioManager = this.getSystemService(AUDIO_SERVICE) as AudioManager
+
         httpServer.start()
         serverTextView.text = getString(R.string.server_up)
         serverButton.text = getString(R.string.stop_server)

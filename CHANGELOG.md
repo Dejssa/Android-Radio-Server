@@ -1,12 +1,15 @@
 # Android radio Changelog
 
-## [Unreleased]
+## [unrealeased 0.1.0]
 
 ### Added
+* Store stations in database
 
 ### Changed
+* Split server in server,handler,provider,repository
 
 ### Fixed
+* Station play button color
 
 ## [0.0.3]
 
@@ -42,7 +45,7 @@
 * Separate play/stop buttons
 * Mute button
 
-## [0.0.3]
+## [0.0.2]
 
 ### Added
 * Add staion

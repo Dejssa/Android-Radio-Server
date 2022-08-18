@@ -18,18 +18,18 @@ const playerPauseIcon = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v
 let _playerState = {}
 
 function loadStationInfo() {
-  loadCurrentStation().then(updateStationInfo)
+  apiRadioGetState().then(updateStationInfo)
 }
 
 function updateVolume(event) {
-  updateRadioVolume(event.target.value)
+  apiRadioVolumeSet(event.target.value)
 }
 
 function togglePlayStatus() {
   if (_playerState.IsPlaying) {
-    stopCurrentStation().then(updateStationInfo)
+    apiRadioPause().then(updateStationInfo)
   } else {
-    playCurrentStation().then(updateStationInfo)
+    apiRadioPlay().then(updateStationInfo)
   }
 }
 

@@ -34,17 +34,18 @@ function _request_get(path) {
 
 // ================= PLAYER ===================
 
-const playCurrentStation = () => _request_post("current/play").then((response) => response.json())
+const apiRadioPlay = () => _request_post("radio/play").then((response) => response.json())
 
-const stopCurrentStation = () => _request_post("current/stop").then((response) => response.json())
+const apiRadioPause = () => _request_post("radio/pause").then((response) => response.json())
 
-const loadCurrentStation = () => _request_get("station/current").then((response) => response.json())
+const apiRadioGetState = () => _request_get("radio/state").then((response) => response.json())
 
-const updateRadioVolume = (Percentage) => _request_post("volume/level", { Percentage })
+const apiRadioVolumeSet = (Percentage) => _request_post("radio/volume/level", { Percentage })
+
+const apiRadioPlayStationByUUID = (UUID) =>
+  _request_post("radio/play/station", { UUID }).then((response) => response.json())
 
 // ============= SELECTED STATION =============
-
-const playStationByUUID = (UUID) => _request_post("station/play", { UUID }).then((response) => response.json())
 
 const deleteStationByUUID = (UUID) => _request_post("station/delete", { UUID }).then((response) => response.json())
 

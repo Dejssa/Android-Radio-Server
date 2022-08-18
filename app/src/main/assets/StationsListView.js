@@ -54,8 +54,8 @@ function renderStationRow(stationInfo) {
   title.append(stationInfo.Title)
 
   const playButton = document.createElement("button")
-  playButton.onclick = () => playStationByUUID(stationInfo.UUID)
-  playButton.className = "player_button"
+  playButton.onclick = () => apiRadioPlayStationByUUID(stationInfo.UUID)
+  playButton.className = "contained player_button"
   playButton.innerHTML = playStationIcon
 
   container.append(title)
