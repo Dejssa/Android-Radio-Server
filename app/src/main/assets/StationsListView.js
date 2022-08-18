@@ -11,41 +11,39 @@ const playStationIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path
 
 const validateNewRadio = (url, title) => {
   if (url.length === 0) {
-    return 'Empty URL'
+    return "Empty URL"
   }
 
   if (title.length === 0) {
-    return 'Empty title'
+    return "Empty title"
   }
 
   return null
 }
 
 const saveStationInfo = () => {
-  const URL = document.getElementById('radio_url').value
-  const Title = document.getElementById('radio_title').value
+  const URL = document.getElementById("radio_url").value
+  const Title = document.getElementById("radio_title").value
 
   const validation = validateNewRadio(URL, Title)
   if (validation) {
-    alert(validation)
+    showNotification(validation)
 
     return
   }
- 
-  saveNewStation(URL, Title)
-    .then(data => renderStationsList(data))
+
+  saveNewStation(URL, Title).then((data) => renderStationsList(data))
 }
 
 function deleteSelectedStation(uuid) {
-  deleteStationByUUID(uuid)
-    .then(data => renderStationsList(data))
+  deleteStationByUUID(uuid).then((data) => renderStationsList(data))
 }
 
 function renderStationRow(stationInfo) {
-  const container = document.createElement('div');
+  const container = document.createElement("div")
   container.className = "station_row"
 
-  const deleteButton = document.createElement('button')
+  const deleteButton = document.createElement("button")
   deleteButton.onclick = () => deleteSelectedStation(stationInfo.UUID)
   deleteButton.className = "delete_button icon"
   deleteButton.innerHTML = deleteStationIcon
@@ -55,7 +53,7 @@ function renderStationRow(stationInfo) {
   title.append(deleteButton)
   title.append(stationInfo.Title)
 
-  const playButton = document.createElement('button')
+  const playButton = document.createElement("button")
   playButton.onclick = () => playStationByUUID(stationInfo.UUID)
   playButton.className = "player_button"
   playButton.innerHTML = playStationIcon
@@ -67,29 +65,29 @@ function renderStationRow(stationInfo) {
 }
 
 function renderStationsList(stations) {
-  const stationsContainer = document.getElementById("stations_list");
+  const stationsContainer = document.getElementById("stations_list")
 
-  if(stations.length === 0) {
-    const emptyView = document.createElement('div')
-    emptyView.className="empty_view"
+  if (stations.length === 0) {
+    const emptyView = document.createElement("div")
+    emptyView.className = "empty_view"
 
-    const emptyViewIcon = document.createElement('div')
-    emptyViewIcon.className="empty_view_icon"
+    const emptyViewIcon = document.createElement("div")
+    emptyViewIcon.className = "empty_view_icon"
     emptyViewIcon.innerHTML = emptyListIcon
-    
-    const emptyViewLabel = document.createElement('p')
-    emptyViewLabel.className="body1 empty_view_label"
-    emptyViewLabel.append('Currenlty there is no stations.')
-    emptyViewLabel.append(document.createElement('br'))
-    emptyViewLabel.append('What are you waiting for? Add the first one!')
-    
+
+    const emptyViewLabel = document.createElement("p")
+    emptyViewLabel.className = "body1 empty_view_label"
+    emptyViewLabel.append("Currenlty there is no stations.")
+    emptyViewLabel.append(document.createElement("br"))
+    emptyViewLabel.append("What are you waiting for? Add the first one!")
+
     emptyView.append(emptyViewIcon)
     emptyView.append(emptyViewLabel)
 
-    stationsContainer.innerHTML = ''
+    stationsContainer.innerHTML = ""
     stationsContainer.append(emptyView)
   } else {
-    stationsContainer.innerHTML = ''
-    stations.forEach(station => stationsContainer.append(renderStationRow(station)))
+    stationsContainer.innerHTML = ""
+    stations.forEach((station) => stationsContainer.append(renderStationRow(station)))
   }
 }

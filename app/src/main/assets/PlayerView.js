@@ -37,8 +37,7 @@ function updateStationInfo(data) {
   _playerState = data
 
   document.getElementById("radio_volume").value = _playerState.Volume || 0
-  document.getElementById("current_station_title").innerText = _playerState.StationInfo.Title || 'No station selected'
-  
+  document.getElementById("current_station_title").innerText = _playerState.StationInfo.Title || "No station selected"
 
   renderStationsList(_playerState.Stations)
   renderVolumeIcon(_playerState.Volume || 0)
@@ -60,7 +59,7 @@ function renderVolumeIcon(value) {
 }
 
 function renderPlayerButton(isPlaying) {
-  const playerButton = document.getElementById('player_button')
+  const playerButton = document.getElementById("player_button")
 
   if (isPlaying) {
     playerButton.innerHTML = playerPauseIcon

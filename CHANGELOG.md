@@ -3,10 +3,19 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [0.0.3]
+
+### Added
 * Include file to simplify loading of new web files
 * Link to git
 * Static radio name
 * Dynamic volume icon (3%, 25%, 50%, 100%)
+* Import/Export of stored stations
 
 ### Changed
 * UI
@@ -27,6 +36,7 @@
 
 ### Fixed
 * Last removed station keeps be in the list
+* Minor performance improvemt. Target request path comparison works as a direct string compare instead of contains function
 
 ### Removed
 * Separate play/stop buttons
