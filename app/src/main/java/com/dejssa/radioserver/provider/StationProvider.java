@@ -2,8 +2,10 @@ package com.dejssa.radioserver.provider;
 
 import com.dejssa.radioserver.repository.StationRepository;
 import com.dejssa.radioserver.storage.domain.StationInfo;
+import com.dejssa.radioserver.storage.requests.StationRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StationProvider {
 
@@ -25,6 +27,10 @@ public class StationProvider {
 
     public void save(StationInfo station) {
         this.repository.save(station);
+    }
+
+    public void saveMany(List<StationInfo> stations) {
+        stations.forEach(this::save);
     }
 
     public void delete(String UUID) {

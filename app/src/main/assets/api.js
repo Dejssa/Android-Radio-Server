@@ -53,6 +53,6 @@ const apiStationDeleteByUUID = (UUID) => _request_post("station/delete", { UUID 
 
 // ============= IMPORT / EXPORT ==============
 
-const exportStations = () => _request_get("list/export").then((response) => response.json())
+const exportStations = () => _request_get("stations/export").then((response) => response.json())
 
-const importStations = (data) => _request_post("list/import", data).then((response) => response.json())
+const importStations = (data) => _request_post("stations/import", data).then((response) => response.json())

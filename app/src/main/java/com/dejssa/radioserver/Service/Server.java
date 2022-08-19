@@ -34,6 +34,10 @@ public class Server extends NanoHTTPD{
                 return this.stationHandler.serveSave(session);
             case StationHandler.REQUEST_DELETE:
                 return this.stationHandler.serveDelete(session);
+            case StationHandler.REQUEST_EXPORT_MASS:
+                return this.stationHandler.serveExportMass(session);
+            case StationHandler.REQUEST_IMPORT:
+                return this.stationHandler.serveImport(session);
             case RadioHandler.REQUEST_VOLUME:
                 return this.radioHandler.serveVolume(session);
             case RadioHandler.REQUEST_PLAY_STATION:
@@ -47,26 +51,6 @@ public class Server extends NanoHTTPD{
             default:
                 return this.serveDefault(session);
         }
-//
-//
-//        // Play selected station.
-//        if (compare(session, "/station/play")) {
-//            StationUUIDRequest request = this.parseRequest(session, StationUUIDRequest.class);
-//            apiRadioPlayStationByUUID(request);
-//            return newFixedLengthResponse(new Gson().toJson(this.prepareRadioStatus()));
-//        }
-//
-//        // Export the list of stations.
-//        if (compare(session, "/list/export")) {
-//            return newFixedLengthResponse(new Gson().toJson(this.Stations));
-//        }
-//
-//        // Import a new list of stations.
-//        if (compare(session, "/list/import")) {
-//            return serverImportStations(session);
-//        }
-//
-//        return this.webAppResponse.serve(session);
     }
 
     private Response serveDefault(IHTTPSession session) {
@@ -97,11 +81,6 @@ public class Server extends NanoHTTPD{
         super.stop();
     }
 
-//    private Response serverSaveStation(IHTTPSession session) {
-//        StationRequest request = this.parseRequest(session, StationRequest.class);
-//        this.Stations.add(request.toDomain());
-//        return newFixedLengthResponse(new Gson().toJson(this.Stations));
-//    }
 //
 //    private Response serverImportStations(IHTTPSession session) {
 ////        ArrayList<StationRequest> request = this.parseRequest(session, ArrayList.class);
