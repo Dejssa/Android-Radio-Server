@@ -27,6 +27,11 @@ public class RadioProvider {
         this.setVolumeTo(request.Percentage);
     }
 
+    public void playStation(String UUID) {
+        this.currentStation = this.stationProvider.getByUUID(UUID);
+        this.play();
+    }
+
     public void play() {
         String url = currentStation.URL;
 

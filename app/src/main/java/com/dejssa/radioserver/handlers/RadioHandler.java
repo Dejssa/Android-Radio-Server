@@ -1,9 +1,12 @@
 package com.dejssa.radioserver.handlers;
 
 import com.dejssa.radioserver.provider.Providers;
+import com.dejssa.radioserver.storage.requests.StationUUIDRequest;
 import com.dejssa.radioserver.storage.requests.VolumeLevelRequest;
 import com.dejssa.radioserver.storage.responses.StatusResponse;
 import com.google.gson.Gson;
+
+import java.util.UUID;
 
 import fi.iki.elonen.NanoHTTPD.Response;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
@@ -23,7 +26,7 @@ public class RadioHandler {
         this.providers = providers;
     }
 
-    public Response serverVolume(IHTTPSession session) {
+    public Response serveVolume(IHTTPSession session) {
         VolumeLevelRequest request = RequestParser.parseObject(session, VolumeLevelRequest.class);
 
         this.providers.radio.setVolume(request);
@@ -31,19 +34,29 @@ public class RadioHandler {
         return newFixedLengthResponse("");
     }
 
-    public Response serverPlay(IHTTPSession session) {
+    public Response servePlayStation(IHTTPSession session) {
+        StationUUIDRequest request = RequestParser.parseObject(session, StationUUIDRequest.class);
+
+        this.providers.radio.playStation(request.UUID);
+
+        StatusResponse state = this.providers.radio.state();
+
+        return newFixedLengthResponse(new Gson().toJson(state));
+    }
+
+    public Response servePlay(IHTTPSession session) {
         this.providers.radio.play();
 
         return newFixedLengthResponse("");
     }
 
-    public Response serverPause(IHTTPSession session) {
+    public Response servePause(IHTTPSession session) {
         this.providers.radio.stop();
 
         return newFixedLengthResponse("");
     }
 
-    public Response serverState(IHTTPSession session) {
+    public Response serveState(IHTTPSession session) {
         StatusResponse state = this.providers.radio.state();
 
         return newFixedLengthResponse(new Gson().toJson(state));

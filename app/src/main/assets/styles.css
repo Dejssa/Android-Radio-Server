@@ -114,36 +114,6 @@ body {
 	padding: 0 24px;
 }
 
-
-
-.station_row {
-	justify-content: space-between;
-	width: 100%;
-	display: flex;
-	padding-top: 12px;
-	padding-bottom: 12px;
-	align-items: center;
-}
-
-.station_row_title {
-	display: flex;
-	align-items: center;
-}
-
-.station_row:first-child:not(:only-child) {
-	padding-top: 0px !important;
-	padding-bottom: 12px !important;
-}
-
-.station_row:last-child:not(:only-child) {
-	padding-top: 12px !important;
-	padding-bottom: 0px !important;
-}
-
-.station_row:not(:last-child) {
-	border-bottom: 1px solid #b7b7b7;
-}
-
 .add_radion_container {
 	display: flex;
 	align-items: center;
@@ -230,8 +200,39 @@ input[type=text]:focus-visible {
 	*/
 
 .stations_list {
+	padding-top: 16px;
 	height: 100%;
+	overflow: auto;
 }
+
+.station_row {
+	justify-content: space-between;
+	width: 100%;
+	display: flex;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	align-items: center;
+}
+
+.station_row_title {
+	display: flex;
+	align-items: center;
+}
+
+.station_row:first-child:not(:only-child) {
+	padding-top: 0px !important;
+	padding-bottom: 8px !important;
+}
+
+.station_row:last-child:not(:only-child) {
+	padding-top: 8px !important;
+	padding-bottom: 0px !important;
+}
+
+.station_row:not(:last-child) {
+	border-bottom: 1px solid #b7b7b7;
+}
+
 
 /**
 	* Empty view styles

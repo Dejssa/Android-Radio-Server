@@ -1,6 +1,5 @@
 package com.dejssa.radioserver.provider;
 
-import com.dejssa.radioserver.handlers.RequestParser;
 import com.dejssa.radioserver.repository.StationRepository;
 import com.dejssa.radioserver.storage.domain.StationInfo;
 
@@ -14,6 +13,10 @@ public class StationProvider {
     public StationProvider(Providers providers) {
         this.providers = providers;
         this.repository = new StationRepository(providers.getContext());
+    }
+
+    public StationInfo getByUUID(String UUID) {
+        return this.repository.getByUUID(UUID);
     }
 
     public ArrayList<StationInfo> find() {

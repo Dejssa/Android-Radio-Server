@@ -10,6 +10,7 @@
 
 ### Fixed
 * Station play button color
+* Spacing between station rows
 
 ## [0.0.3]
 

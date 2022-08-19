@@ -8,11 +8,9 @@ import com.dejssa.radioserver.handlers.StationHandler;
 import com.dejssa.radioserver.provider.Providers;
 import com.dejssa.radioserver.provider.RadioProvider;
 import com.dejssa.radioserver.provider.StationProvider;
-import com.dejssa.radioserver.storage.domain.StationInfo;
 import com.dejssa.radioserver.storage.model.WebProjectFiles;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -33,19 +31,19 @@ public class Server extends NanoHTTPD{
     public Response serve(IHTTPSession session) {
         switch (session.getUri()) {
             case StationHandler.REQUEST_SAVE:
-                return this.stationHandler.serverSave(session);
+                return this.stationHandler.serveSave(session);
             case StationHandler.REQUEST_DELETE:
-                return this.stationHandler.serverDelete(session);
+                return this.stationHandler.serveDelete(session);
             case RadioHandler.REQUEST_VOLUME:
-                return this.radioHandler.serverVolume(session);
+                return this.radioHandler.serveVolume(session);
             case RadioHandler.REQUEST_PLAY_STATION:
-                return this.radioHandler.ser(session);
+                return this.radioHandler.servePlayStation(session);
             case RadioHandler.REQUEST_PLAY:
-                return this.radioHandler.serverPlay(session);
+                return this.radioHandler.servePlay(session);
             case RadioHandler.REQUEST_PAUSE:
-                return this.radioHandler.serverPause(session);
+                return this.radioHandler.servePause(session);
             case RadioHandler.REQUEST_STATE:
-                return this.radioHandler.serverState(session);
+                return this.radioHandler.serveState(session);
             default:
                 return this.serveDefault(session);
         }
@@ -118,42 +116,5 @@ public class Server extends NanoHTTPD{
 //        this.Stations = newStations;
 //
 //        return newFixedLengthResponse(new Gson().toJson(this.Stations));
-//    }
-
-
-//    private StatusResponse prepareRadioStatus() {
-//        return new StatusResponse(
-//            this.getVolume(),
-//            this.currentStation.toResponse(),
-//            this.Stations,
-//            this.getPlayingStatus()
-//        );
-//    }
-
-//    private boolean getPlayingStatus() {
-//        if (this.player == null) {
-//            return false;
-//        }
-//
-//        return this.player.isPlaying();
-//    }
-
-//    private void apiRadioPlayStationByUUID(StationUUIDRequest request) {
-//        for (StationInfo station : this.Stations) {
-//            if (station.UUID.equals(request.UUID)) {
-//                this.currentStation = station;
-//
-//                playAudio();
-//            }
-//        }
-//    }
-
-//    private void deleteSelectedStation(StationUUIDRequest request) {
-//        int index = IntStream.range(0, Stations.size())
-//                .filter(i -> Stations.get(i).UUID.equals(request.UUID))
-//                .findFirst()
-//                .orElse(-1);
-//
-//        Stations.remove(index);
 //    }
 }

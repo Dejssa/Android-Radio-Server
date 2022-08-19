@@ -32,11 +32,11 @@ const saveStationInfo = () => {
     return
   }
 
-  saveNewStation(URL, Title).then((data) => renderStationsList(data))
+  apiStationSave(URL, Title).then((data) => renderStationsList(data))
 }
 
 function deleteSelectedStation(uuid) {
-  deleteStationByUUID(uuid).then((data) => renderStationsList(data))
+  apiStationDeleteByUUID(uuid).then((data) => renderStationsList(data))
 }
 
 function renderStationRow(stationInfo) {

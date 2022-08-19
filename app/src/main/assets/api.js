@@ -1,5 +1,5 @@
 // const serverURL = window.location.href
-const serverURL = "http://192.168.1.102:8080/"
+const serverURL = "http://192.168.1.8:8080/"
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
@@ -47,9 +47,9 @@ const apiRadioPlayStationByUUID = (UUID) =>
 
 // ============= SELECTED STATION =============
 
-const deleteStationByUUID = (UUID) => _request_post("station/delete", { UUID }).then((response) => response.json())
+const apiStationSave = (URL, Title) => _request_post("station/save", { URL, Title }).then((response) => response.json())
 
-const saveNewStation = (URL, Title) => _request_post("station/save", { URL, Title }).then((response) => response.json())
+const apiStationDeleteByUUID = (UUID) => _request_post("station/delete", { UUID }).then((response) => response.json())
 
 // ============= IMPORT / EXPORT ==============
 

@@ -12,14 +12,14 @@ class StationRepository (context: Context) {
 
     private val base = SQLBase(context)
 
-    fun save(station: StationInfo){
+    fun save(station: StationInfo) {
         val sql = base.writableDatabase
         val query = "INSERT INTO $table (uuid, url, title) VALUES('${station.UUID}','${station.URL}', '${station.Title}')"
         sql.execSQL(query)
         sql.close()
     }
 
-    fun get(uuid: String): StationInfo?{
+    fun getByUUID(uuid: String): StationInfo?{
         val sql = base.readableDatabase
         val cursor = sql.rawQuery( "SELECT * FROM $table WHERE uuid = ?", Array(1){uuid})
 
