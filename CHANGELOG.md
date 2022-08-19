@@ -1,6 +1,14 @@
 # Android radio Changelog
 
-## [unrealeased 0.1.0]
+## [unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [0.1.0]
 
 ### Added
 * Store stations in database
