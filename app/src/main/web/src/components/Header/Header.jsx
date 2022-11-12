@@ -1,17 +1,10 @@
 import React from 'react'
 import {
-	Box,
 	AppBar,
 	Toolbar,
-	Divider,
-	Typography,
 	Container,
 	Stack,
-	Tabs,
-	Tab,
-	useMediaQuery,
 } from '@mui/material'
-import { Book, Person } from '@mui/icons-material'
 import RadionInfo from 'components/RadionInfo'
 import ApplicationInfo from 'components/ApplicationInfo'
 import styles from './styles'

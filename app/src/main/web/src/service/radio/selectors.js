@@ -10,7 +10,13 @@ const getRadioPlayingStation = createSelector(
 	info => info?.StationInfo
 )
 
+const getRadioStations = createSelector(
+	state => state.radio.data, 
+	info => info?.Stations || []
+)
+
 export {
 	getRadioVolume,
 	getRadioPlayingStation,
+	getRadioStations,
 }
