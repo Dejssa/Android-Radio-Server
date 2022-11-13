@@ -5,12 +5,19 @@ export default {
 	},
 	settings: {
 		title: 'Налады',
-		language: {
-			title: 'Мова праграмы',
-			options: {
-				'en-US': 'English',
-				'pl-PL': 'Polska',
-				'by-BY': 'Беларуская',
+		browser: {
+			title: 'Браўзэр',
+			language: {
+				title: 'Мова праграмы',
+				options: {
+					'en-US': 'English',
+					'pl-PL': 'Polska',
+					'by-BY': 'Беларуская',
+				}
+			},
+			refresh: {
+				title: 'Час абнаўлення інфармацыы',
+				time: 'Секунд',
 			}
 		}
 	},

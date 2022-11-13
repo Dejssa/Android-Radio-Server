@@ -11,17 +11,16 @@ import {
 	TextField, 
 	Typography,
 	MenuItem,
+	InputAdornment,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 const SettingsDialog = ({ open, onClose, onCancel, onConfirm }) => {
 	const { t, i18n } = useTranslation('text')
 
-	console.log(i18n.options.languages)
-
 	const languagesOptions = useMemo(() => i18n.options.languages.map(code => (
 		<MenuItem key={code} value={code}>
-			{t(`settings.language.options.${code}`)}
+			{t(`settings.browser.language.options.${code}`)}
 		</MenuItem>
 	)), [i18n.options.languages, t])
 
@@ -35,17 +34,28 @@ const SettingsDialog = ({ open, onClose, onCancel, onConfirm }) => {
 				{t('settings.title')}
 			</DialogTitle>
 			<DialogContent>
-				<Stack>
+				<Stack rowGap={2}>
 					<Typography variant='h6'>
-          Browser settings
+						{t('settings.browser.title')}
 					</Typography>
-					<Grid container>
+					<Grid container spacing={2}>
 						<Grid item md={6}>
-
+							<TextField
+								label={t('settings.browser.refresh.title')}
+								value={20}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											{t('settings.browser.refresh.time')}
+										</InputAdornment>
+									),
+								}}
+								fullWidth
+							/>
 						</Grid>
 						<Grid item md={6}>
 							<TextField
-								label={t('settings.language.title')}
+								label={t('settings.browser.language.title')}
 								value={i18n.language}
 								onChange={handleOnLanguageChange}
 								fullWidth
@@ -77,11 +87,14 @@ const SettingsDialog = ({ open, onClose, onCancel, onConfirm }) => {
 }
 
 SettingsDialog.propTypes = {
-
+	open: PropTypes.bool,
+	onClose: PropTypes.func.isRequired,
+	onCancel: PropTypes.func.isRequired,
+	onConfirm: PropTypes.func.isRequired,
 }
 
 SettingsDialog.defaultProps = {
-
+	open: false,
 }
 
 export default SettingsDialog

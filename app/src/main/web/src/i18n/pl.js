@@ -5,12 +5,19 @@ export default {
 	},
 	settings: {
 		title: 'Ustawienia',
-		language: {
-			title: 'Język aplikacji',
-			options: {
-				'en-US': 'English',
-				'pl-PL': 'Polska',
-				'by-BY': 'Беларуская',
+		browser: {
+			title: 'Przeglądarka',
+			language: {
+				title: 'Język aplikacji',
+				options: {
+					'en-US': 'English',
+					'pl-PL': 'Polska',
+					'by-BY': 'Беларуская',
+				}
+			},
+			refresh: {
+				title: 'Czas odświeżania informacji',
+				time: 'Sekundy',
 			}
 		}
 	},
