@@ -5,5 +5,4 @@ export default {
 	pause: () => requestPost('radio/pause').then(response => response.json()),
 	getState: () => requestGet('radio/state').then(response => response.json()),
 	setVolume: Percentage => requestPost('radio/volume/level', { Percentage }).then(response => response.json()),
-	playStationByUUID: (UUID) => requestPost('radio/play/station', { UUID }).then(response => response.json()),
 }

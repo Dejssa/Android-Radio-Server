@@ -1,23 +1,20 @@
 import React, { useCallback, useRef, useState } from 'react'
-import Edit from '@mui/icons-material/Edit'
+import PropTypes from 'prop-types'
 import {
 	Typography, 
 	Stack, 
-	Slide, 
-	Button,
+	IconButton,
+	Tooltip,
 } from '@mui/material'
+import { Settings } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
 
-function RadionInfo() {
-	const [showEdit, setShowEdit] = useState(false)
-
-	const containerRef = useRef()
+function RadionInfo({ onOpenSettingsDialog  }) {
+	const { t } = useTranslation('text')
 
 	const info = {
 		name: 'Radio server - 304',
 	}
-
-	const handleOnHoverEnter = useCallback(() => setShowEdit(true), [])
-	const handleOnHoverLeave = useCallback(() => setShowEdit(false), [])
 
 	return (
 		<Stack
@@ -25,28 +22,25 @@ function RadionInfo() {
 			width="max-content"
 			alignItems="center"
 			columnGap={2}
-			onMouseEnter={handleOnHoverEnter}
-			onMouseLeave={handleOnHoverLeave}
 		>
 			<Typography >
 				{info.name}
 			</Typography>
-			<div ref={containerRef} style={{ overflow: 'hidden' }}>
-				<Slide
-					in={showEdit}
-					direction="right"
-					container={containerRef.current}
-				>
-					<Button 
-						sx={{ color: 'white', textTransform: 'capitalize' }}
-						endIcon={<Edit />}
-					>
-            Edit
-					</Button>
-				</Slide>
-			</div>
+			<Tooltip title={t('settings.title')}>
+				<IconButton size='small' onClick={onOpenSettingsDialog}>
+					<Settings sx={{color: 'white'}}/>
+				</IconButton>
+			</Tooltip>
 		</Stack>
 	)
+}
+
+RadionInfo.propTypes = {
+	onOpenSettingsDialog: PropTypes.func.isRequired,
+}
+
+RadionInfo.defaultProps = {
+
 }
 
 export default RadionInfo
