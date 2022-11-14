@@ -7,6 +7,7 @@ import { getRadioStations } from 'service/radio/selectors'
 import StationRow from './StationRow/StationRow'
 import AlertDialog from 'dialogs/AlertDialog'
 import { useTranslation } from 'react-i18next'
+import { deleteAction } from 'service/station/actions'
 
 const StationsList = () => {
 	const { t } = useTranslation('text')
@@ -16,7 +17,7 @@ const StationsList = () => {
 
 	const dispatch = useDispatch()
 
-	// const dispatchDeleteRequest = useCallback(item => dispatch(), [dispatch])
+	const dispatchDeleteRequest = useCallback(item => dispatch(deleteAction(item.UUID)), [dispatch])
 	
 	const stations = useSelector(getRadioStations)
 	
@@ -28,6 +29,11 @@ const StationsList = () => {
 	const handleOnCancel = useCallback(() => setDeleteDialogOpen(false), [])
 
 	const handleOnDialogClose = useCallback(() => setSelectedStation(null), [])
+
+	const handleOnDialogConfirm = useCallback(() => {
+		dispatchDeleteRequest(selectedStation)
+		setDeleteDialogOpen(false)
+	}, [dispatchDeleteRequest, selectedStation])
 
 	return (
 		<>
@@ -43,6 +49,7 @@ const StationsList = () => {
 				title={t('station.dialog.delete.title')}
 				description={t('station.dialog.delete.description', { station: selectedStation?.Title })}
 				open={deleteDialogOpen} 
+				onConfirm={handleOnDialogConfirm}
 				onCancel={handleOnCancel}
 				onClose={handleOnDialogClose}
 				isDeleteConfirmation
