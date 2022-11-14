@@ -1,10 +1,10 @@
 # Files mentioned here are allowed to be loaded via rest request.
 # First file is a default response on a request.
-- index.html
-- manifest.json
-- favicon.ico
-- asset-manifest.json
+- web/index.html
+- web/manifest.json
+- web/favicon.ico
+- web/asset-manifest.json
 # styles
-- static/js/main.3bfdc974.js
-- static/js/main.3bfdc974.js.LICENSE.txt
-- static/js/main.3bfdc974.js.map
+- web/static/js/main.b18be9b1.js
+- web/static/js/main.b18be9b1.js.LICENSE
+- web/static/js/main.b18be9b1.js.map

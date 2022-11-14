@@ -4,6 +4,7 @@
 /app/src/main/web/.vscode
 /app/src/main/web/.gradle
 /app/src/main/web/package-lock.json
+/app/src/main/assets/web
 
 *.iml
 .gradle
