@@ -8,6 +8,22 @@
 
 ### Fixed
 
+## [pre-1.0.0]
+
+### Added
+* Confirmation on delete station action
+* [WIP] Radio settings
+* [WIP] EN, PL, BY languages support
+* [WIP] Edit station
+* [WIP] Station avatar upload
+
+### Changed
+* UI base. Now FE use react + MUI
+* Station row view
+  * Station has avatar
+  * Play station button is hidden in avatar
+  * Edit button added
+
 ## [0.1.0]
 
 ### Added

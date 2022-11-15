@@ -31,7 +31,9 @@ public class RadioHandler {
 
         this.providers.radio.setVolume(request);
 
-        return newFixedLengthResponse("");
+        StatusResponse state = this.providers.radio.state();
+
+        return newFixedLengthResponse(new Gson().toJson(state));
     }
 
     public Response servePlayStation(IHTTPSession session) {

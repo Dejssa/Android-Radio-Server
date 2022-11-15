@@ -1,5 +1,15 @@
+# web app
+/app/src/main/web/node_modules
+/app/src/main/web/build
+/app/src/main/web/.vscode
+/app/src/main/web/.gradle
+/app/src/main/web/package-lock.json
+/app/src/main/assets/web
+
 *.iml
 .gradle
+/.idea
+
 /local.properties
 /.idea/caches
 /.idea/libraries

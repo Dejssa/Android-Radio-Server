@@ -1,12 +1,10 @@
 # Files mentioned here are allowed to be loaded via rest request.
 # First file is a default response on a request.
-- index.html
-- api.js
-- importExport.js
-- notifications.js
+- web/index.html
+- web/manifest.json
+- web/favicon.ico
+- web/asset-manifest.json
 # styles
-- styles.css
-- mui.css
-# components.
-- StationsListView.js
-- PlayerView.js
+- web/static/js/main.b18be9b1.js
+- web/static/js/main.b18be9b1.js.LICENSE
+- web/static/js/main.b18be9b1.js.map
