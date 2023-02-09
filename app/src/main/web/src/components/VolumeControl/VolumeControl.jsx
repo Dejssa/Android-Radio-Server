@@ -52,7 +52,7 @@ const VolumeControl = () => {
 	}, [])
 
 	return (
-		<Stack direction={'row'} columnGap={2} alignItems='center'>
+		<Stack direction={'row'} columnGap={2} alignItems='center' width={'100%'}>
 			<Icon/>
 			<Slider 
 				value={volumeValue} 

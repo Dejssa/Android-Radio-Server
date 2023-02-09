@@ -22,7 +22,8 @@
     "eslint-plugin-react": "7.31.10",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-react-redux": "4.0.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "renamer": "^4.0.0"
   },
   "dependencies": {
     "@emotion/react": "11.10.5",

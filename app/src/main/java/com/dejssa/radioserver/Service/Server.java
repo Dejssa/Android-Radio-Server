@@ -10,6 +10,7 @@ import com.dejssa.radioserver.provider.RadioProvider;
 import com.dejssa.radioserver.provider.StationProvider;
 import com.dejssa.radioserver.storage.model.WebProjectFiles;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
@@ -56,7 +57,8 @@ public class Server extends NanoHTTPD{
     private Response serveDefault(IHTTPSession session) {
         for (int i = 0; i < files.getFiles().size(); i++) {
             if (session.getUri().contains(files.getFiles().get(i).getName())) {
-                return newFixedLengthResponse(files.getFiles().get(i).getContent());
+                byte[] content = files.getFiles().get(i).getBytes();
+                return newFixedLengthResponse(Response.Status.OK, "application/json", new ByteArrayInputStream(content), content.length);
             }
         }
 

@@ -1,6 +1,5 @@
 import { 
-	Delete, 
-	Edit, 
+	MoreVert, 
 	PlayArrow,
 	QuestionMark,
 } from '@mui/icons-material'
@@ -8,19 +7,46 @@ import PropTypes from 'prop-types'
 import { 
 	IconButton,
 	ListItem,
-	ListItemIcon,
 	ListItemText,
 	Avatar,
 	Zoom,
+	Card,
 } from '@mui/material'
 import { styled } from '@mui/styles'
 import React, { useCallback } from 'react'
 import { useState } from 'react'
+import theme from 'theme'
 
 const PlayButton = styled(IconButton)(() => ({
 	'&.MuiButtonBase-root': {
 		position: 'absolute'
 	}
+}))
+
+const StationCard = styled(Card)(() => ({
+	'&.MuiCard-root': {
+		width: '100%',
+		height: 60,
+		display: 'grid',
+		gridTemplateColumns: '60px calc(100% - 100px) 40px',
+		alignItems: 'center',
+		backgroundColor: '#fdfce9',
+		'& > .MuiAvatar-root': {
+			height: 60,
+			width: 60,
+			borderRadius: 0,
+			background: '#d6eb70',
+			color: theme.palette.primary.dark
+		}
+	}
+}))
+
+const StationTitle = styled('div')(() => ({
+	paddingInline: 16,
+	overflow: 'hidden',
+	textOverflow: 'ellipsis',
+	overflowWrap: 'break-word',
+	display: 'block',
 }))
 
 const StationRow = ({ station, onDelete }) => {
@@ -36,7 +62,7 @@ const StationRow = ({ station, onDelete }) => {
 			onMouseEnter={handleOnHoverEnter}
 			onMouseLeave={handleOnHoverLeave}
 		>
-			<ListItemIcon>
+			<StationCard>
 				<Avatar>
 					<QuestionMark />
 					<Zoom in={hovered}>
@@ -48,16 +74,17 @@ const StationRow = ({ station, onDelete }) => {
 						</PlayButton>
 					</Zoom>
 				</Avatar>
-			</ListItemIcon>
-			<ListItemText>
-				{station.Title}
-			</ListItemText>
-			<IconButton size='small' variant='text'>
-				<Edit color='primary' />
-			</IconButton>
-			<IconButton size='small' variant='text' onClick={handleOnDeleteClick}>
-				<Delete color='error'/>
-			</IconButton>
+				<StationTitle>
+					<ListItemText style={{ 
+						whiteSpace: 'nowrap',
+					}}>
+						{station.Title}
+					</ListItemText>
+				</StationTitle>
+				<IconButton size='small' variant='text'>
+					<MoreVert/>
+				</IconButton>
+			</StationCard>
 		</ListItem>
 	)
 }

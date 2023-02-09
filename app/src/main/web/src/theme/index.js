@@ -4,9 +4,7 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 const applicationTheme = createTheme({
 	palette: {
 		primary:{
-			dark:'#2c387e',
-			main:'#3f51b5',
-			light:'#6573c3',
+			main:'#597463',
 		},
 		font: {
 			main: '#01124f',
@@ -15,6 +13,10 @@ const applicationTheme = createTheme({
 			online: 'green',
 			offline: 'red',
 		},
+		text: {
+			primary: '#000',
+			secondary: '#000'
+		}
 	},
 	typography: {
 		fontFamily: 'Montserrat,sans-serif',
@@ -55,22 +57,6 @@ applicationTheme.components = {
 			}
 		},
 	},
-	MuiButton: {
-		variants: [
-			{
-				props: { variant: 'dashed' },
-				style: {
-					textTransform: 'none',
-					border: `2px dashed ${applicationTheme.palette.primary.main}`,
-					color: applicationTheme.palette.primary.main,
-					':hover': {
-						borderColor: applicationTheme.palette.primary.light,
-						color: applicationTheme.palette.primary.light,
-					}
-				},
-			}
-		]
-	}
 }
 
 const theme = responsiveFontSizes(applicationTheme)

@@ -24,8 +24,8 @@ export default {
 	station: {
 		dialog: {
 			delete: {
-				title: 'Usuń stację',
-				description: 'You about to delete "{{ station }}" station. This action cannot be undone'
+				title: 'Usuwanie stacji',
+				description: 'Wy chcecie usunięc stację "{{ station }}"? Nie można to cofnąć.'
 			}
 		}
 	}

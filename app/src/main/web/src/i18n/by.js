@@ -25,7 +25,7 @@ export default {
 		dialog: {
 			delete: {
 				title: 'Выдаліць станцыю',
-				description: 'Вы зараз выдаліце станцыю "{{ station }}". Гэта дзеянне нельга адменіць'
+				description: 'Вы зараз выдаліце станцыю "{{ station }}". Гэта нельга адменіць'
 			}
 		}
 	}

@@ -48,31 +48,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadWebPageFiles(): WebProjectFiles {
+        val includeFile = loadFile("include.yaml")
+
         val yaml = Yaml()
-        val includedFiles = yaml.load(loadFile("include.yaml")) as ArrayList<String>
+        val includedFiles = yaml.load(String(includeFile)) as ArrayList<String>
         val includedFilesContent: ArrayList<File> = ArrayList()
 
         includedFiles.forEach {
-            includedFilesContent.add(File(it, loadFile(it)))
+            val fileContent = loadFile(it)
+
+            includedFilesContent.add(File(it, String(fileContent), fileContent))
         }
 
         return WebProjectFiles(includedFilesContent)
     }
 
-    private fun loadFile(fileName: String): String {
-        var content = ""
+    private fun loadFile(fileName: String): ByteArray {
+        var buffer = ByteArray(0)
 
         try {
             val inputStream = assets.open(fileName)
             val size: Int = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer).toString()
-            content = String(buffer)
+            buffer = ByteArray(size)
+            inputStream.read(buffer)
         } catch (e: IOException) {
             e.printStackTrace()
         }
 
-        return content;
+        return buffer
     }
 }
 

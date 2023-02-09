@@ -1,8 +1,7 @@
 export default theme => ({
 	container: {
-		display: 'flex',
-		flexDirection: 'column',
-		rowGap: 8,
+		display: 'grid',
+		gridTemplateColumns: '25% 75%',
 		width: '100%',
 		height: '100%',
 	},
