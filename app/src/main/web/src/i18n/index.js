@@ -1,22 +1,22 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import en from './en'
-import pl from './pl'
-import by from './by'
+import byBY from './byBY'
+import byLT from './byLT'
+import enUS from './enUS'
 
 import 'moment/locale/nl'
 
 i18n
 	.use(initReactI18next)
 	.init({
-		languages: ['en-US', 'pl-PL', 'by-BY'],
-		lng: 'en-US',
+		languages: ['en-US', 'by-BY', 'by-LT'],
+		lng: 'by-BY',
 		debug: true,
 		resources: {
-			en: { text: en },
-			pl: { text: pl },
-			by: { text: by },
+			'en-US': enUS,
+			'by-BY': byBY,
+			'by-LT': byLT,
 		},
 		interpolation: {
 			escapeValue: false,

@@ -13,9 +13,13 @@ import {
 	Card,
 } from '@mui/material'
 import { styled } from '@mui/styles'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useState } from 'react'
 import theme from 'theme'
+import CustomerMenu from 'components/CustomerMenu'
+import AlertDialog from 'dialogs/AlertDialog'
+import { useTranslation } from 'react-i18next'
+import Translation from 'components/Translation'
 
 const PlayButton = styled(IconButton)(() => ({
 	'&.MuiButtonBase-root': {
@@ -49,13 +53,46 @@ const StationTitle = styled('div')(() => ({
 	display: 'block',
 }))
 
-const StationRow = ({ station, onDelete }) => {
+const StationRow = ({ station, onPlay, onDelete }) => {
+	const { t } = useTranslation(['stations', 'common'])
+
 	const [hovered, setHovered] = useState(false)
+	const [menuAnchor, setMenuAnchor] = useState(false)
+	const [deleteDialogState, setDeleteDialogState] = useState(false)
 	
 	const handleOnHoverEnter = useCallback(() => setHovered(true), [])
 	const handleOnHoverLeave = useCallback(() => setHovered(false), [])
 
 	const handleOnDeleteClick = useCallback(() => onDelete(station), [onDelete, station])
+
+	const handleOnPlay = useCallback(() => {
+		onPlay(station)
+	}, [onPlay, station])
+
+	const handleOnOpen = useCallback(event => {
+		setMenuAnchor(event.target)
+	}, [])
+
+	const handleOnMenuClose = useCallback(() => {
+		setMenuAnchor(null)
+	}, [])
+
+	const handleOnDeleteStart = useCallback(() => setDeleteDialogState(true), [])
+	const handleOnDeleteCancel = useCallback(() => setDeleteDialogState(false), [])
+	const handleOnDeleteConfirm = useCallback(() => {
+		setDeleteDialogState(false)
+
+	}, [])
+
+	const menuOptions = useMemo(() => [{
+		id: 'edit',
+		title: t('common:edit'),
+		onClick: () => {}
+	}, {
+		id: 'delete',
+		title: t('common:delete'),
+		onClick: handleOnDeleteStart
+	}], [handleOnDeleteStart, t])
 
 	return (
 		<ListItem 
@@ -69,6 +106,7 @@ const StationRow = ({ station, onDelete }) => {
 						<PlayButton 
 							size='small' 
 							variant='contained'
+							onClick={handleOnPlay}
 						>
 							<PlayArrow fontSize='small' />
 						</PlayButton>
@@ -81,9 +119,32 @@ const StationRow = ({ station, onDelete }) => {
 						{station.Title}
 					</ListItemText>
 				</StationTitle>
-				<IconButton size='small' variant='text'>
+				<IconButton 
+					size='small' 
+					variant='text'
+					onClick={handleOnOpen}
+				>
 					<MoreVert/>
 				</IconButton>
+				<CustomerMenu
+					anchorEl={menuAnchor}
+					options={menuOptions}
+					onClose={handleOnMenuClose}
+				/>
+				<AlertDialog
+					title={t('stations:dialog.delete.title')}
+					title={t('stations:dialog.delete.title')}
+					description={(
+						<Translation
+							t={t}
+							text={'stations:dialog.delete.description'}
+							values={{ name: station.Title }}
+						/>
+					)}
+					open={deleteDialogState}
+					onCancel={handleOnDeleteCancel}
+					onConfirm={handleOnDeleteConfirm}
+				/>
 			</StationCard>
 		</ListItem>
 	)

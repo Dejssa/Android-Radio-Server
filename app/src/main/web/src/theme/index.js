@@ -28,6 +28,13 @@ const applicationTheme = createTheme({
 })
 
 applicationTheme.components = {
+	MuiButton: {
+		styleOverrides: {
+			root: {
+				borderRadius: applicationTheme.spacing(8),
+			}
+		}
+	},
 	MuiIconButton: {
 		variants: [
 			{
@@ -54,7 +61,7 @@ applicationTheme.components = {
 				width: 48,
 				maxHeight: 48,
 				height: 48,
-			}
+			},
 		},
 	},
 }

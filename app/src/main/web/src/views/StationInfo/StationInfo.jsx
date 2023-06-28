@@ -1,9 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import bgImage from 'assets/bg.png'
-import { Button, IconButton, Stack, Typography } from '@mui/material'
+import { 
+	IconButton,
+	Stack, 
+	Tooltip, 
+	Typography,
+} from '@mui/material'
 import styled from '@emotion/styled'
-import { Favorite, Pause } from '@mui/icons-material'
+import { Favorite, FavoriteOutlined } from '@mui/icons-material'
 import VolumeControl from 'components/VolumeControl'
+import StateButton from './StateButton'
+import { getRadioCurrentState } from 'service/radio/selectors'
+import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const BgImage = styled('div')(() => ({
 	backgroundImage: `url(${bgImage})`,
@@ -12,23 +21,37 @@ const BgImage = styled('div')(() => ({
 	backgroundSize: 'cover',
 }))
 
-const ButtonStyled = styled(Button)(() => ({
-	'&.MuiButton-root':{
-		width: 'max-content',
-		borderRadius: 24,
-	}
-}))
+
 
 const StationInfo = () => {
+	const { t } = useTranslation(['current'])
+
+	const favorite = useMemo(() => true, [])
+	const playingState = useSelector(getRadioCurrentState)
+	
 	useEffect(() => {
 
 	}, [])
 
+	const favoriteIcon = useMemo(() => {
+		if (favorite) {
+			return (
+				<Tooltip title={t('current:favorite.off')}>
+					<Favorite htmlColor='white' />
+				</Tooltip>
+			)
+		}
+
+		return (
+			<Tooltip title={t('current:favorite.on')}>
+				<FavoriteOutlined htmlColor='white' />
+			</Tooltip>
+		)
+	}, [favorite, t])
+
 	return (
 		<BgImage>
-			<div style={{height: '100%'}}>
-    
-			</div>
+			<div style={{height: '100%'}} />
 			<div style={{
 				background: '#262227f2',
 				height: 'max-content',
@@ -38,18 +61,16 @@ const StationInfo = () => {
 			}}>
 				<Stack gap={4}>
 					<Typography variant='h6'>
-            Now playing: Radio rock
+						{t('current:playing', {name: 'Radio rock'})}
 					</Typography>
-					<ButtonStyled 
-						variant='contained'
-						startIcon={<Pause/>}
-					>
-            Pause
-					</ButtonStyled>
+					<StateButton 
+						state={playingState.IsPlaying}
+						station={playingState.StationInfo}
+					/>
 				</Stack>
 				<Stack gap={4} alignItems='end'>
 					<IconButton style={{color: '#000'}}>
-						<Favorite htmlColor='white' />
+						{favoriteIcon}
 					</IconButton>
 					<VolumeControl/>
 				</Stack>

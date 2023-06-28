@@ -14,15 +14,16 @@ import {
 	InputAdornment,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import languages from './languages'
 
 const SettingsDialog = ({ open, onClose, onCancel, onConfirm }) => {
-	const { t, i18n } = useTranslation('text')
+	const { t, i18n } = useTranslation(['common','settings'])
 
-	const languagesOptions = useMemo(() => i18n.options.languages.map(code => (
-		<MenuItem key={code} value={code}>
-			{t(`settings.browser.language.options.${code}`)}
+	const languagesOptions = useMemo(() => languages.map(item => (
+		<MenuItem key={item.code} value={item.code}>
+			{item.title}
 		</MenuItem>
-	)), [i18n.options.languages, t])
+	)), [])
 
 	const handleOnLanguageChange = useCallback(event => {
 		i18n.changeLanguage(event.target.value)
@@ -31,22 +32,22 @@ const SettingsDialog = ({ open, onClose, onCancel, onConfirm }) => {
 	return (
 		<Dialog onClose={onClose} open={open} fullWidth>
 			<DialogTitle>
-				{t('settings.title')}
+				{t('settings:title')}
 			</DialogTitle>
 			<DialogContent>
 				<Stack rowGap={2}>
 					<Typography variant='h6'>
-						{t('settings.browser.title')}
+						{t('settings:browser.title')}
 					</Typography>
 					<Grid container spacing={2}>
 						<Grid item md={6}>
 							<TextField
-								label={t('settings.browser.refresh.title')}
+								label={t('settings:browser.refresh.title')}
 								value={20}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
-											{t('settings.browser.refresh.time')}
+											{t('settings:browser.refresh.description')}
 										</InputAdornment>
 									),
 								}}
@@ -55,7 +56,7 @@ const SettingsDialog = ({ open, onClose, onCancel, onConfirm }) => {
 						</Grid>
 						<Grid item md={6}>
 							<TextField
-								label={t('settings.browser.language.title')}
+								label={t('settings:browser.language.title')}
 								value={i18n.language}
 								onChange={handleOnLanguageChange}
 								fullWidth
@@ -73,13 +74,13 @@ const SettingsDialog = ({ open, onClose, onCancel, onConfirm }) => {
 					variant='text'
 					onClick={onCancel}
 				>
-					{t('common.cancel')}
+					{t('common:cancel')}
 				</Button>
 				<Button 
 					variant='contained'
 					onClick={onConfirm}
 				>
-					{t('common.confirm')}
+					{t('common:apply')}
 				</Button>
 			</DialogActions>
 		</Dialog>

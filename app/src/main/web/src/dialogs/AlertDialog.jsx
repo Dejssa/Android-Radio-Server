@@ -11,7 +11,7 @@ import {
 import { useTranslation } from 'react-i18next'
 
 const AlertDialog = ({ title, description, onClose, onCancel, onConfirm, open, isDeleteConfirmation }) => {
-	const { t } = useTranslation('text')
+	const { t } = useTranslation(['common'])
 
 	return (
 		<Dialog onClose={onClose} open={open}>
@@ -28,14 +28,14 @@ const AlertDialog = ({ title, description, onClose, onCancel, onConfirm, open, i
 					variant={isDeleteConfirmation ? 'contained' : 'text'} 
 					onClick={onCancel}
 				>
-					{t('common.cancel')}
+					{t('common:cancel')}
 				</Button>
 				<Button 
 					variant={isDeleteConfirmation ? 'text' : 'contained'} 
 					color={isDeleteConfirmation ? 'error' : 'primary'}
 					onClick={onConfirm}
 				>
-					{t('common.confirm')}
+					{t('common:apply')}
 				</Button>
 			</DialogActions>
 		</Dialog>

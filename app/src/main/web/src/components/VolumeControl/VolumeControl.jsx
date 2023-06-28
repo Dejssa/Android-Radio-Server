@@ -13,12 +13,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getRadioVolume } from 'service/radio/selectors'
 import { setRadioVolume } from 'service/radio/actions'
 import { useEffect } from 'react'
+import { debounce } from 'lodash'
 
 const VolumeControl = () => {
 	const [value, setValue] = useState(-1)
 
 	const dispatch = useDispatch()
-	const setVolume = useCallback(value => dispatch(setRadioVolume(value)), [])
+	const setVolume = useCallback(value => dispatch(setRadioVolume(value)), [dispatch])
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const updateVolume = useCallback(debounce(value => setVolume(value), 500), [])
 
 	const serverRadioVolume = useSelector(getRadioVolume)
 
@@ -46,10 +50,10 @@ const VolumeControl = () => {
 		const oldValue = value
 
 		setValue(value)
-		setVolume(value)
+		updateVolume(value)
 			.then(() => {}) 
 			.catch(() => setValue(oldValue))
-	}, [])
+	}, [updateVolume])
 
 	return (
 		<Stack direction={'row'} columnGap={2} alignItems='center' width={'100%'}>
